@@ -35,6 +35,8 @@ export default function HomeScreen() {
             placeholderTextColor="#999"
           />
 
+          <Text style={styles.label}>Contraseña</Text>
+
           <TextInput
             placeholder="*************"
             secureTextEntry
@@ -100,12 +102,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     color: "black",
-    fontWeight: "500",
+    fontWeight: "bold",
   },
 
   label: {
     marginBottom: 5,
     color: "black",
+    fontWeight: "bold",
   },
 
   input: {
