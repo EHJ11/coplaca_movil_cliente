@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Image,
   ImageBackground,
   StyleSheet,
   Text,
@@ -20,8 +21,13 @@ export default function HomeScreen() {
     >
       <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <Text style={styles.logoText}>Coplaca</Text>
+          <Image
+            source={require("@/assets/images/coplaca.png")}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
         </View>
+
         <View style={styles.card}>
           <Text style={styles.title}>Iniciar sesión</Text>
 
@@ -88,6 +94,10 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     color: "#1E8E3E",
+  },
+  logoImage: {
+    width: "80%",
+    height: "80%",
   },
 
   card: {
