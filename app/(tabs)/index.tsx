@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 export default function HomeScreen() {
-  const [screen, setScreen] = useState("register"); // "register" | "login"
+  const [screen, setScreen] = useState("register");
 
   const [nombre, setNombre] = useState("");
   const [apellidos, setApellidos] = useState("");
