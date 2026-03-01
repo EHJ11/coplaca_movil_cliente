@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Image,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -22,6 +23,134 @@ export default function HomeScreen() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  // ─── HOME ─────────────────────────────────────────────────────────────────
+  if (screen === "home") {
+    const ProductCard = (
+      { style = {} }: { style?: any }, //** MODIFICADO: añadido valor por defecto y tipo opcional
+    ) => (
+      <View style={[homeStyles.productCard, style]}>
+        <Image
+          source={require("@/assets/images/cerezas.png")}
+          style={homeStyles.productImage}
+          resizeMode="contain"
+        />
+        <Text style={homeStyles.productName}>Nombre</Text>
+        <Text style={homeStyles.productOriginal}>Precio original</Text>
+        <View style={homeStyles.productBottom}>
+          <TouchableOpacity style={homeStyles.addButton}>
+            <Text style={homeStyles.addButtonText}>Añadir</Text>
+          </TouchableOpacity>
+          <Text style={homeStyles.productOffer}>Precio oferta</Text>
+        </View>
+      </View>
+    );
+
+    const GridCard = () => (
+      <View style={homeStyles.gridCard}>
+        <Image
+          source={require("@/assets/images/cerezas.png")}
+          style={homeStyles.gridImage}
+          resizeMode="contain"
+        />
+        <Text style={homeStyles.gridName}>Nombre</Text>
+        <TouchableOpacity style={homeStyles.addButton}>
+          <Text style={homeStyles.addButtonText}>Añadir</Text>
+        </TouchableOpacity>
+      </View>
+    );
+
+    return (
+      <View style={homeStyles.wrapper}>
+        {/* HEADER */}
+        <View style={homeStyles.header}>
+          <View style={homeStyles.headerLeft}>
+            <Image
+              source={require("@/assets/images/coplaca.png")}
+              style={homeStyles.headerLogo}
+              resizeMode="contain"
+            />
+            <Text style={homeStyles.headerTitle}>Coplaca</Text>
+          </View>
+          <TouchableOpacity>
+            <Image
+              source={require("@/assets/images/lupa.png")}
+              style={homeStyles.lupaIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <ScrollView
+          style={homeStyles.scroll}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* OFERTAS DEL DÍA */}
+          <View style={homeStyles.section}>
+            <Text style={homeStyles.sectionTitle}>¡Ofertas del día!</Text>
+            <Text style={homeStyles.sectionSubtitle}>
+              Frutas a un 30 % ahora, aprovecha
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={homeStyles.hScroll}
+            >
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+            </ScrollView>
+          </View>
+
+          {/* PRODUCTOS DE TEMPORADA */}
+          <View style={homeStyles.section}>
+            <Text style={homeStyles.sectionTitle}>
+              ¡Productos de temporada!
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={homeStyles.hScroll}
+            >
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+            </ScrollView>
+          </View>
+
+          {/* NUESTROS PRODUCTOS */}
+          <View style={homeStyles.section}>
+            <Text style={homeStyles.sectionTitle}>Nuestros productos</Text>
+            <View style={homeStyles.grid}>
+              <GridCard />
+              <GridCard />
+              <GridCard />
+              <GridCard />
+            </View>
+          </View>
+
+          <View style={{ height: 80 }} />
+        </ScrollView>
+
+        {/* BOTTOM NAV */}
+        <View style={homeStyles.bottomNav}>
+          <TouchableOpacity style={homeStyles.navItem}>
+            <Text style={homeStyles.navIcon}>bolsa</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={homeStyles.navItem}>
+            <Text style={homeStyles.navIcon}>carrito</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={homeStyles.navItem}>
+            <Text style={homeStyles.navIcon}>mail</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={homeStyles.navItem}>
+            <Text style={homeStyles.navIcon}>persona</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
+  // ─── LOGIN ─────────────────────────────────────────────────────────────────
   if (screen === "login") {
     return (
       <ImageBackground
@@ -61,7 +190,10 @@ export default function HomeScreen() {
               secureTextEntry
             />
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setScreen("home")}
+            >
               <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
 
@@ -80,6 +212,7 @@ export default function HomeScreen() {
     );
   }
 
+  // ─── REGISTER ──────────────────────────────────────────────────────────────
   return (
     <ImageBackground
       source={require("@/assets/images/Fondo-Hojas-Platanera.jpg")}
@@ -172,10 +305,9 @@ export default function HomeScreen() {
   );
 }
 
+// ─── ESTILOS AUTH ─────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-  },
+  background: { flex: 1 },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -194,10 +326,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: "#FFC107",
   },
-  logoImage: {
-    width: "80%",
-    height: "80%",
-  },
+  logoImage: { width: "80%", height: "80%" },
   card: {
     width: "100%",
     backgroundColor: "rgba(0, 128, 0, 0.7)",
@@ -211,11 +340,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
   },
-  label: {
-    marginBottom: 5,
-    color: "black",
-    fontWeight: "bold",
-  },
+  label: { marginBottom: 5, color: "black", fontWeight: "bold" },
   input: {
     backgroundColor: "#fff",
     borderRadius: 30,
@@ -235,16 +360,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 20,
   },
-  passwordInput: {
-    flex: 1,
-    paddingVertical: 12,
-  },
-  eyeButton: {
-    paddingLeft: 10,
-  },
-  eyeIcon: {
-    fontSize: 18,
-  },
+  passwordInput: { flex: 1, paddingVertical: 12 },
+  eyeButton: { paddingLeft: 10 },
+  eyeIcon: { fontSize: 18 },
   button: {
     backgroundColor: "#0A8F3E",
     paddingVertical: 15,
@@ -252,18 +370,97 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  buttonText: {
-    color: "white",
+  buttonText: { color: "white", fontWeight: "bold", fontSize: 16 },
+  switchText: { textAlign: "center", marginTop: 15, color: "#FFC107" },
+  switchLink: { fontWeight: "bold", color: "#FFC107" },
+});
+
+// ─── ESTILOS HOME ─────────────────────────────────────────────────────────────
+const homeStyles = StyleSheet.create({
+  wrapper: { flex: 1, backgroundColor: "#fff" },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingTop: 50,
+    paddingBottom: 12,
+    backgroundColor: "#fff",
+    borderBottomWidth: 2,
+    borderBottomColor: "#0A8F3E",
+  },
+  headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
+  headerLogo: { width: 40, height: 40 },
+  headerTitle: { fontSize: 22, fontWeight: "bold", color: "#0A8F3E" },
+  lupaIcon: { width: 26, height: 26 },
+  scroll: { flex: 1 },
+  section: { paddingHorizontal: 16, paddingTop: 16 },
+  sectionTitle: {
+    fontSize: 18,
     fontWeight: "bold",
-    fontSize: 16,
+    color: "#0A8F3E",
+    marginBottom: 2,
   },
-  switchText: {
-    textAlign: "center",
-    marginTop: 15,
-    color: "#FFC107",
+  sectionSubtitle: {
+    fontSize: 12,
+    color: "#555",
+    marginBottom: 10,
   },
-  switchLink: {
-    fontWeight: "bold",
-    color: "#FFC107",
+  hScroll: { flexDirection: "row" },
+  productCard: {
+    width: 130,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: "#0A8F3E",
+    padding: 10,
+    marginRight: 12,
+    alignItems: "flex-start",
   },
+  productImage: { width: 50, height: 50, alignSelf: "center", marginBottom: 6 },
+  productName: { fontWeight: "bold", fontSize: 13, marginBottom: 2 },
+  productOriginal: { fontSize: 11, color: "#555" },
+  productBottom: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: 6,
+    flexWrap: "wrap",
+  },
+  addButton: {
+    backgroundColor: "#FFC107",
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+  },
+  addButtonText: { fontWeight: "bold", fontSize: 12, color: "#000" },
+  productOffer: { fontSize: 11, color: "#555" },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 12,
+    marginTop: 10,
+  },
+  gridCard: {
+    width: "46%",
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: "#0A8F3E",
+    padding: 12,
+    alignItems: "flex-start",
+  },
+  gridImage: { width: 50, height: 50, alignSelf: "center", marginBottom: 8 },
+  gridName: { fontWeight: "bold", fontSize: 13, marginBottom: 8 },
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    paddingVertical: 12,
+    borderTopWidth: 2,
+    borderTopColor: "#0A8F3E",
+    backgroundColor: "#fff",
+  },
+  navItem: { padding: 8 },
+  navIcon: { fontSize: 24 },
 });
