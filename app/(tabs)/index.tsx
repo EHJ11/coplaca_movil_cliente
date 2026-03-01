@@ -25,9 +25,7 @@ export default function HomeScreen() {
 
   // ─── HOME ─────────────────────────────────────────────────────────────────
   if (screen === "home") {
-    const ProductCard = (
-      { style = {} }: { style?: any }, //** MODIFICADO: añadido valor por defecto y tipo opcional
-    ) => (
+    const ProductCard = ({ style = {} }: { style?: any }) => (
       <View style={[homeStyles.productCard, style]}>
         <Image
           source={require("@/assets/images/cerezas.png")}
@@ -134,16 +132,32 @@ export default function HomeScreen() {
         {/* BOTTOM NAV */}
         <View style={homeStyles.bottomNav}>
           <TouchableOpacity style={homeStyles.navItem}>
-            <Text style={homeStyles.navIcon}>bolsa</Text>
+            <Image
+              source={require("@/assets/images/bolsa.png")}
+              style={homeStyles.navIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
           <TouchableOpacity style={homeStyles.navItem}>
-            <Text style={homeStyles.navIcon}>carrito</Text>
+            <Image
+              source={require("@/assets/images/carrito.png")}
+              style={homeStyles.navIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
           <TouchableOpacity style={homeStyles.navItem}>
-            <Text style={homeStyles.navIcon}>mail</Text>
+            <Image
+              source={require("@/assets/images/Mail.png")}
+              style={homeStyles.navIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
           <TouchableOpacity style={homeStyles.navItem}>
-            <Text style={homeStyles.navIcon}>persona</Text>
+            <Image
+              source={require("@/assets/images/persona.png")}
+              style={homeStyles.navIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -462,5 +476,5 @@ const homeStyles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   navItem: { padding: 8 },
-  navIcon: { fontSize: 24 },
+  navIcon: { width: 28, height: 28 }, //** MODIFICADO: antes era fontSize: 24, ahora es width/height para Image
 });
