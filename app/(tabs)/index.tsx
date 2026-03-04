@@ -23,6 +23,142 @@ export default function HomeScreen() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  // ─── BOTTOM NAV (compartido) ───────────────────────────────────────────────
+  const BottomNav = () => (
+    <View style={homeStyles.bottomNav}>
+      <TouchableOpacity
+        style={homeStyles.navItem}
+        onPress={() => setScreen("home")}
+      >
+        <Image
+          source={require("@/assets/images/bolsa.png")}
+          style={homeStyles.navIcon}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={homeStyles.navItem}
+        onPress={() => setScreen("carrito")}
+      >
+        <Image
+          source={require("@/assets/images/carrito.png")}
+          style={homeStyles.navIcon}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={homeStyles.navItem}>
+        <Image
+          source={require("@/assets/images/Mail.png")}
+          style={homeStyles.navIcon}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={homeStyles.navItem}>
+        <Image
+          source={require("@/assets/images/persona.png")}
+          style={homeStyles.navIcon}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+    </View>
+  );
+
+  // ─── CARRITO ───────────────────────────────────────────────────────────────
+  if (screen === "carrito") {
+    const CartItem = () => (
+      <View style={cartStyles.cartItem}>
+        <Image
+          source={require("@/assets/images/cerezas.png")}
+          style={cartStyles.cartItemImage}
+          resizeMode="contain"
+        />
+        <View style={cartStyles.cartItemInfo}>
+          <Text style={cartStyles.cartItemName}>Nombre</Text>
+          <Text style={cartStyles.cartItemPrice}>Precio/Peso</Text>
+          <View style={cartStyles.cartItemQty}>
+            <TouchableOpacity style={cartStyles.qtyBtn}>
+              <Text style={cartStyles.qtyBtnText}>−</Text>
+            </TouchableOpacity>
+            <Text style={cartStyles.qtyText}>Cantidad</Text>
+            <TouchableOpacity style={cartStyles.qtyBtn}>
+              <Text style={cartStyles.qtyBtnText}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+
+    const RecoCard = () => (
+      <View style={homeStyles.productCard}>
+        <Image
+          source={require("@/assets/images/cerezas.png")}
+          style={homeStyles.productImage}
+          resizeMode="contain"
+        />
+        <Text style={homeStyles.productName}>Nombre</Text>
+        <Text style={homeStyles.productOriginal}>Precio original</Text>
+        <View style={homeStyles.productBottom}>
+          <TouchableOpacity style={homeStyles.addButton}>
+            <Text style={homeStyles.addButtonText}>Añadir</Text>
+          </TouchableOpacity>
+          <Text style={homeStyles.productOffer}>Precio oferta</Text>
+        </View>
+      </View>
+    );
+
+    return (
+      <View style={homeStyles.wrapper}>
+        {/* HEADER */}
+        <View style={homeStyles.header}>
+          <View style={homeStyles.headerLeft}>
+            <Image
+              source={require("@/assets/images/coplaca.png")}
+              style={homeStyles.headerLogo}
+              resizeMode="contain"
+            />
+            <Text style={homeStyles.headerTitle}>Coplaca</Text>
+          </View>
+        </View>
+
+        <ScrollView
+          style={homeStyles.scroll}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* TU CARRITO */}
+          <View style={cartStyles.cartBox}>
+            <Text style={cartStyles.cartTitle}>Tu carrito</Text>
+            <CartItem />
+            <CartItem />
+            <CartItem />
+          </View>
+
+          {/* RECOMENDACIONES */}
+          <View style={homeStyles.section}>
+            <Text style={homeStyles.sectionTitle}>Recomendaciones</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={homeStyles.hScroll}
+            >
+              <RecoCard />
+              <RecoCard />
+              <RecoCard />
+            </ScrollView>
+          </View>
+
+          <View style={{ height: 80 }} />
+        </ScrollView>
+
+        {/* BOTÓN PAGAR */}
+        <TouchableOpacity style={cartStyles.payButton}>
+          <Text style={cartStyles.payButtonText}>Pagar</Text>
+        </TouchableOpacity>
+
+        <BottomNav />
+      </View>
+    );
+  }
+
   // ─── HOME ─────────────────────────────────────────────────────────────────
   if (screen === "home") {
     const ProductCard = ({ style = {} }: { style?: any }) => (
@@ -129,37 +265,7 @@ export default function HomeScreen() {
           <View style={{ height: 80 }} />
         </ScrollView>
 
-        {/* BOTTOM NAV */}
-        <View style={homeStyles.bottomNav}>
-          <TouchableOpacity style={homeStyles.navItem}>
-            <Image
-              source={require("@/assets/images/bolsa.png")}
-              style={homeStyles.navIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={homeStyles.navItem}>
-            <Image
-              source={require("@/assets/images/carrito.png")}
-              style={homeStyles.navIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={homeStyles.navItem}>
-            <Image
-              source={require("@/assets/images/Mail.png")}
-              style={homeStyles.navIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={homeStyles.navItem}>
-            <Image
-              source={require("@/assets/images/persona.png")}
-              style={homeStyles.navIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
+        <BottomNav />
       </View>
     );
   }
@@ -476,5 +582,58 @@ const homeStyles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   navItem: { padding: 8 },
-  navIcon: { width: 28, height: 28 }, //** MODIFICADO: antes era fontSize: 24, ahora es width/height para Image
+  navIcon: { width: 28, height: 28 },
+});
+
+// ─── ESTILOS CARRITO ──────────────────────────────────────────────────────────
+const cartStyles = StyleSheet.create({
+  cartBox: {
+    margin: 16,
+    backgroundColor: "#FFC107",
+    borderRadius: 20,
+    padding: 16,
+  },
+  cartTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 12,
+    color: "#000",
+  },
+  cartItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#0A8F3E",
+    borderRadius: 14,
+    padding: 10,
+    marginBottom: 10,
+  },
+  cartItemImage: { width: 55, height: 55, marginRight: 12 },
+  cartItemInfo: { flex: 1 },
+  cartItemName: { fontWeight: "bold", fontSize: 15, color: "#fff" },
+  cartItemPrice: { fontSize: 12, color: "#d4f5d4", marginBottom: 6 },
+  cartItemQty: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  qtyBtn: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  qtyBtnText: { fontWeight: "bold", fontSize: 16, color: "#0A8F3E" },
+  qtyText: { color: "#fff", fontSize: 13 },
+  payButton: {
+    backgroundColor: "#FFA500",
+    marginHorizontal: 16,
+    marginBottom: 8,
+    paddingVertical: 15,
+    borderRadius: 30,
+    alignItems: "center",
+  },
+  payButtonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
 });
