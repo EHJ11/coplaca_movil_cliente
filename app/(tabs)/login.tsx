@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
   Image,
   ImageBackground,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -11,14 +10,10 @@ import {
   View,
 } from "react-native";
 
-export default function RegisterScreen() {
+export default function LoginScreen() {
   const router = useRouter();
-  const [nombre, setNombre] = useState("");
-  const [apellidos, setApellidos] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [ubicacion, setUbicacion] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
 
   return (
     <ImageBackground
@@ -26,7 +21,7 @@ export default function RegisterScreen() {
       style={styles.background}
       resizeMode="cover"
     >
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
         <View style={styles.logoContainer}>
           <Image
             source={require("@/assets/images/coplaca.png")}
@@ -35,31 +30,13 @@ export default function RegisterScreen() {
           />
         </View>
         <View style={styles.card}>
-          <Text style={styles.title}>Registrar</Text>
-
-          <Text style={styles.label}>Nombre</Text>
-          <TextInput
-            placeholder="Eduardo"
-            value={nombre}
-            onChangeText={setNombre}
-            style={styles.input}
-            placeholderTextColor="#999"
-          />
-
-          <Text style={styles.label}>Apellidos</Text>
-          <TextInput
-            placeholder="Apellidos"
-            value={apellidos}
-            onChangeText={setApellidos}
-            style={styles.input}
-            placeholderTextColor="#999"
-          />
+          <Text style={styles.title}>Iniciar sesión</Text>
 
           <Text style={styles.label}>Email</Text>
           <TextInput
-            placeholder="TuEmail@TuDominio.com"
-            value={email}
-            onChangeText={setEmail}
+            placeholder="Tu email"
+            value={loginEmail}
+            onChangeText={setLoginEmail}
             style={styles.input}
             placeholderTextColor="#999"
             keyboardType="email-address"
@@ -67,50 +44,33 @@ export default function RegisterScreen() {
           />
 
           <Text style={styles.label}>Contraseña</Text>
-          <View style={styles.passwordContainer}>
-            <TextInput
-              placeholder="*************"
-              value={password}
-              onChangeText={setPassword}
-              style={styles.passwordInput}
-              placeholderTextColor="#999"
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.eyeButton}
-            >
-              <Text style={styles.eyeIcon}>{showPassword ? "👁" : "🙈"}</Text>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.label}>Ubicación</Text>
           <TextInput
-            placeholder="C\Calle\Ciudad\Provincia"
-            value={ubicacion}
-            onChangeText={setUbicacion}
+            placeholder="*************"
+            value={loginPassword}
+            onChangeText={setLoginPassword}
             style={styles.input}
             placeholderTextColor="#999"
+            secureTextEntry
           />
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => router.push("/(tabs)/login" as any)}
+            onPress={() => router.replace("/(tabs)/home" as any)}
           >
-            <Text style={styles.buttonText}>Crear</Text>
+            <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
 
           <Text style={styles.switchText}>
-            ¿Ya tienes Cuenta?{" "}
+            ¿No tienes cuenta?{" "}
             <Text
               style={styles.switchLink}
-              onPress={() => router.push("/(tabs)/login" as any)}
+              onPress={() => router.push("/(tabs)/" as any)}
             >
-              Iniciar sesión
+              Regístrate
             </Text>
           </Text>
         </View>
-      </ScrollView>
+      </View>
     </ImageBackground>
   );
 }
@@ -118,7 +78,7 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   background: { flex: 1 },
   container: {
-    flexGrow: 1,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -159,19 +119,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#FFC107",
   },
-  passwordContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 30,
-    borderWidth: 3,
-    borderColor: "#FFC107",
-    marginBottom: 15,
-    paddingHorizontal: 20,
-  },
-  passwordInput: { flex: 1, paddingVertical: 12 },
-  eyeButton: { paddingLeft: 10 },
-  eyeIcon: { fontSize: 18 },
   button: {
     backgroundColor: "#0A8F3E",
     paddingVertical: 15,

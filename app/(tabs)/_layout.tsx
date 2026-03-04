@@ -1,33 +1,69 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Tabs } from "expo-router";
+import { Image } from "react-native";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarStyle: {
+          borderTopWidth: 2,
+          borderTopColor: "#0A8F3E",
+          backgroundColor: "#fff",
+        },
+        tabBarActiveTintColor: "#0A8F3E",
+        tabBarShowLabel: false,
+      }}
+    >
+      <Tabs.Screen name="index" options={{ href: null }} />
+      <Tabs.Screen name="login" options={{ href: null }} />
+      <Tabs.Screen name="explore" options={{ href: null }} />
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: () => (
+            <Image
+              source={require("@/assets/images/bolsa.png")}
+              style={{ width: 28, height: 28 }}
+              resizeMode="contain"
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="carrito"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: () => (
+            <Image
+              source={require("@/assets/images/carrito.png")}
+              style={{ width: 28, height: 28 }}
+              resizeMode="contain"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="pedidos"
+        options={{
+          tabBarIcon: () => (
+            <Image
+              source={require("@/assets/images/Mail.png")}
+              style={{ width: 28, height: 28 }}
+              resizeMode="contain"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="perfil"
+        options={{
+          tabBarIcon: () => (
+            <Image
+              source={require("@/assets/images/persona.png")}
+              style={{ width: 28, height: 28 }}
+              resizeMode="contain"
+            />
+          ),
         }}
       />
     </Tabs>
