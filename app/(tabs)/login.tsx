@@ -126,7 +126,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  buttonText: { color: "white", fontWeight: "bold", fontSize: 16 },
-  switchText: { textAlign: "center", marginTop: 15, color: "#FFC107" },
-  switchLink: { fontWeight: "bold", color: "#FFC107" },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  switchText: {
+    textAlign: "center",
+    marginTop: 15,
+    color: "#FFC107",
+  },
+  switchLink: {
+    fontWeight: "bold",
+    color: "#FFC107",
+  },
 });
