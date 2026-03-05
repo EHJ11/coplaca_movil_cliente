@@ -58,9 +58,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: "#0A8F3E",
   },
-  headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
-  headerLogo: { width: 40, height: 40 },
-  headerTitle: { fontSize: 22, fontWeight: "bold", color: "#0A8F3E" },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  headerLogo: {
+    width: 40,
+    height: 40,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#0A8F3E",
+  },
   scroll: { flex: 1 },
   pedidoBox: {
     margin: 16,
@@ -92,7 +103,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 4,
   },
-  pedidoLabel: { color: "#fff", fontSize: 14, fontWeight: "bold" },
+  pedidoLabel: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
   pedidoDivider: {
     height: 1,
     backgroundColor: "rgba(255,255,255,0.3)",

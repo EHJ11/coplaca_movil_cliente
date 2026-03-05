@@ -18,13 +18,13 @@ export default function CarritoScreen() {
       <View style={styles.cartItemInfo}>
         <Text style={styles.cartItemName}>Nombre</Text>
         <Text style={styles.cartItemPrice}>Precio/Peso</Text>
-        <View style={styles.cartItemQty}>
-          <TouchableOpacity style={styles.qtyBtn}>
-            <Text style={styles.qtyBtnText}>−</Text>
+        <View style={styles.cartItemhorizontal}>
+          <TouchableOpacity style={styles.circlecuantity}>
+            <Text style={styles.SumRest}>−</Text>
           </TouchableOpacity>
-          <Text style={styles.qtyText}>Cantidad</Text>
-          <TouchableOpacity style={styles.qtyBtn}>
-            <Text style={styles.qtyBtnText}>+</Text>
+          <Text style={styles.textCuantity}>Cantidad</Text>
+          <TouchableOpacity style={styles.circlecuantity}>
+            <Text style={styles.SumRest}>+</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -102,10 +102,23 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: "#0A8F3E",
   },
-  headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
-  headerLogo: { width: 40, height: 40 },
-  headerTitle: { fontSize: 22, fontWeight: "bold", color: "#0A8F3E" },
-  scroll: { flex: 1 },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  headerLogo: {
+    width: 40,
+    height: 40,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#0A8F3E",
+  },
+  scroll: {
+    flex: 1,
+  },
   cartBox: {
     margin: 16,
     backgroundColor: "#FFC107",
@@ -127,12 +140,30 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  cartItemImage: { width: 55, height: 55, marginRight: 12 },
-  cartItemInfo: { flex: 1 },
-  cartItemName: { fontWeight: "bold", fontSize: 15, color: "#fff" },
-  cartItemPrice: { fontSize: 12, color: "#d4f5d4", marginBottom: 6 },
-  cartItemQty: { flexDirection: "row", alignItems: "center", gap: 8 },
-  qtyBtn: {
+  cartItemImage: {
+    width: 55,
+    height: 55,
+    marginRight: 12,
+  },
+  cartItemInfo: {
+    flex: 1,
+  },
+  cartItemName: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#fff",
+  },
+  cartItemPrice: {
+    fontSize: 12,
+    color: "#d4f5d4",
+    marginBottom: 6,
+  },
+  cartItemhorizontal: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  circlecuantity: {
     backgroundColor: "#fff",
     borderRadius: 20,
     width: 24,
@@ -140,9 +171,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  qtyBtnText: { fontWeight: "bold", fontSize: 16, color: "#0A8F3E" },
-  qtyText: { color: "#fff", fontSize: 13 },
-  section: { paddingHorizontal: 16, paddingTop: 16 },
+  SumRest: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#0A8F3E",
+  },
+  textCuantity: {
+    color: "#fff",
+    fontSize: 13,
+  },
+  section: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
@@ -159,9 +200,21 @@ const styles = StyleSheet.create({
     marginRight: 12,
     alignItems: "flex-start",
   },
-  recoImage: { width: 50, height: 50, alignSelf: "center", marginBottom: 6 },
-  recoName: { fontWeight: "bold", fontSize: 13, marginBottom: 2 },
-  recoOriginal: { fontSize: 11, color: "#555" },
+  recoImage: {
+    width: 50,
+    height: 50,
+    alignSelf: "center",
+    marginBottom: 6,
+  },
+  recoName: {
+    fontWeight: "bold",
+    fontSize: 13,
+    marginBottom: 2,
+  },
+  recoOriginal: {
+    fontSize: 11,
+    color: "#555",
+  },
   recoBottom: {
     flexDirection: "row",
     alignItems: "center",
@@ -175,8 +228,15 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 12,
   },
-  addButtonText: { fontWeight: "bold", fontSize: 12, color: "#000" },
-  recoOffer: { fontSize: 11, color: "#555" },
+  addButtonText: {
+    fontWeight: "bold",
+    fontSize: 12,
+    color: "#000",
+  },
+  recoOffer: {
+    fontSize: 11,
+    color: "#555",
+  },
   payButton: {
     backgroundColor: "#FFA500",
     marginHorizontal: 16,
@@ -185,5 +245,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
   },
-  payButtonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
+  payButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });
