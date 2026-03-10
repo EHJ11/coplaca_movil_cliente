@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import {
   Image,
   ScrollView,
@@ -18,7 +19,10 @@ export default function HomeScreen() {
       <Text style={styles.productName}>Nombre</Text>
       <Text style={styles.productOriginal}>Precio original</Text>
       <View style={styles.productBottom}>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => router.push("/(tabs)/producto")}
+        >
           <Text style={styles.addButtonText}>Añadir</Text>
         </TouchableOpacity>
         <Text style={styles.productOffer}>Precio oferta</Text>
@@ -34,7 +38,10 @@ export default function HomeScreen() {
         resizeMode="contain"
       />
       <Text style={styles.gridName}>Nombre</Text>
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => router.push("/(tabs)/producto")}
+      >
         <Text style={styles.addButtonText}>Añadir</Text>
       </TouchableOpacity>
     </View>

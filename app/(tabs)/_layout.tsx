@@ -1,6 +1,5 @@
 import { Tabs } from "expo-router";
 import { Image } from "react-native";
-
 export default function TabLayout() {
   return (
     <Tabs
@@ -18,6 +17,7 @@ export default function TabLayout() {
       <Tabs.Screen name="index" options={{ href: null }} />
       <Tabs.Screen name="login" options={{ href: null }} />
       <Tabs.Screen name="explore" options={{ href: null }} />
+      <Tabs.Screen name="producto" options={{ href: null }} />
       <Tabs.Screen
         name="home"
         options={{
