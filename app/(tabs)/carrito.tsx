@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import {
   Image,
   ScrollView,
@@ -82,7 +83,10 @@ export default function CarritoScreen() {
         <View style={{ height: 20 }} />
       </ScrollView>
 
-      <TouchableOpacity style={styles.payButton}>
+      <TouchableOpacity
+        style={styles.payButton}
+        onPress={() => router.push("/(tabs)/pedido")}
+      >
         <Text style={styles.payButtonText}>Pagar</Text>
       </TouchableOpacity>
     </View>

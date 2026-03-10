@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -9,16 +10,18 @@ export default function ProductoScreen() {
 
   return (
     <View style={styles.wrapper}>
+      {/* Header */}
       <View style={styles.header}>
         <Image
           source={require("@/assets/images/coplaca.png")}
           style={styles.headerLogo}
           resizeMode="contain"
         />
-        <Text style={styles.headerTitle}></Text>
       </View>
 
+      {/* Card principal */}
       <View style={styles.card}>
+        {/* Imagen del producto */}
         <View style={styles.imageContainer}>
           <Image
             source={require("@/assets/images/cerezas.png")}
@@ -27,9 +30,11 @@ export default function ProductoScreen() {
           />
         </View>
 
+        {/* Nombre y precio */}
         <Text style={styles.productName}>Nombre</Text>
         <Text style={styles.productPrice}>Precio/peso</Text>
 
+        {/* Contador de cantidad */}
         <View style={styles.counterRow}>
           <TouchableOpacity style={styles.counterBtn} onPress={decrementar}>
             <Text style={styles.counterBtnText}>−</Text>
@@ -40,11 +45,16 @@ export default function ProductoScreen() {
           </TouchableOpacity>
         </View>
 
+        {/* Descripción */}
         <View style={styles.descContainer}>
           <Text style={styles.descText}>Descripcion</Text>
         </View>
 
-        <TouchableOpacity style={styles.saveButton}>
+        {/* Botón guardar */}
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => router.push("/(tabs)/pedidos")}
+        >
           <Text style={styles.saveButtonText}>guardar</Text>
         </TouchableOpacity>
       </View>
@@ -64,8 +74,8 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   headerLogo: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
     marginBottom: 4,
   },
   headerTitle: {
