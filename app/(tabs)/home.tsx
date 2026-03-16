@@ -56,7 +56,6 @@ export default function HomeScreen() {
             style={styles.headerLogo}
             resizeMode="contain"
           />
-          <Text style={styles.headerTitle}>Coplaca</Text>
         </View>
         <TouchableOpacity>
           <Image

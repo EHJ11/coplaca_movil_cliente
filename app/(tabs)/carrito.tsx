@@ -59,7 +59,6 @@ export default function CarritoScreen() {
             style={styles.headerLogo}
             resizeMode="contain"
           />
-          <Text style={styles.headerTitle}>Coplaca</Text>
         </View>
       </View>
 

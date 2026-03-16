@@ -24,7 +24,6 @@ export default function PedidosScreen() {
             style={styles.headerLogo}
             resizeMode="contain"
           />
-          <Text style={styles.headerTitle}>Coplaca</Text>
         </View>
       </View>
 
