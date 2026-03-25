@@ -39,7 +39,7 @@ export default function ProductoScreen() {
           <TouchableOpacity style={styles.counterBtn} onPress={decrementar}>
             <Text style={styles.counterBtnText}>−</Text>
           </TouchableOpacity>
-          <Text style={styles.counterText}>Cantidad</Text>
+          <Text style={styles.counterText}>{cantidad} kg</Text>
           <TouchableOpacity style={styles.counterBtn} onPress={incrementar}>
             <Text style={styles.counterBtnText}>+</Text>
           </TouchableOpacity>
