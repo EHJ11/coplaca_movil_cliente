@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { api } from "@/services/api";
+import { session } from "@/services/session";
 
 export default function RegisterScreen() {
   const router = useRouter();
@@ -17,8 +19,99 @@ export default function RegisterScreen() {
   const [apellidos, setApellidos] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [ubicacion, setUbicacion] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [telefono, setTelefono] = useState("");
+  const [street, setStreet] = useState("");
+  const [streetNumber, setStreetNumber] = useState("");
+  const [apartment, setApartment] = useState("");
+  const [city, setCity] = useState("");
+  const [province, setProvince] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState("");
+  const [error, setError] = useState("");
+  const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  function validatePassword(): boolean {
+    const errors: string[] = [];
+
+    if (!password || !password.trim()) {
+      errors.push('La contrasena es requerida');
+    }
+
+    if (!confirmPassword || !confirmPassword.trim()) {
+      errors.push('La confirmacion de contrasena es requerida');
+    }
+
+    if (password && password.length < 8) {
+      errors.push('La contrasena debe tener al menos 8 caracteres');
+    }
+
+    if (password && !/[A-Z]/.test(password)) {
+      errors.push('La contrasena debe contener al menos una mayuscula');
+    }
+
+    if (password && !/[a-z]/.test(password)) {
+      errors.push('La contrasena debe contener al menos una minuscula');
+    }
+
+    if (password && !/[0-9]/.test(password)) {
+      errors.push('La contrasena debe contener al menos un numero');
+    }
+
+    if (password && confirmPassword && password !== confirmPassword) {
+      errors.push('Las contrasenas no coinciden');
+    }
+
+    setPasswordErrors(errors);
+    return errors.length === 0;
+  }
+
+  async function handleSignup() {
+    if (!validatePassword()) {
+      return;
+    }
+
+    const requiredValues = [nombre, apellidos, email, password, street, streetNumber, city, province, postalCode];
+    if (requiredValues.some((value) => !value.trim())) {
+      setError("Completa los datos obligatorios del domicilio.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+      const response = await api.signup({
+        email,
+        password,
+        firstName: nombre,
+        lastName: apellidos,
+        phoneNumber: telefono,
+        address: {
+          street,
+          streetNumber,
+          apartment,
+          city,
+          province,
+          postalCode,
+          additionalInfo,
+          latitude: 0,
+          longitude: 0,
+        },
+      });
+
+      session.setToken(response.token);
+      const profile = await api.getCurrentUser(response.token);
+      session.setUser(profile);
+      router.replace("/(tabs)/home" as any);
+    } catch {
+      setError("No se pudo completar el registro.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <ImageBackground
@@ -84,21 +177,106 @@ export default function RegisterScreen() {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.label}>Ubicación</Text>
+          <Text style={styles.label}>Confirmar contraseña</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              placeholder="*************"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              style={styles.passwordInput}
+              placeholderTextColor="#999"
+              secureTextEntry={!showConfirmPassword}
+            />
+            <TouchableOpacity
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              style={styles.eyeButton}
+            >
+              <Text style={styles.eyeIcon}>{showConfirmPassword ? "👁" : "🙈"}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.label}>Telefono</Text>
           <TextInput
-            placeholder="C\Calle\Ciudad\Provincia"
-            value={ubicacion}
-            onChangeText={setUbicacion}
+            placeholder="Telefono"
+            value={telefono}
+            onChangeText={setTelefono}
             style={styles.input}
             placeholderTextColor="#999"
           />
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => router.push("/(tabs)/login" as any)}
-          >
-            <Text style={styles.buttonText}>Crear</Text>
+          <Text style={styles.label}>Calle</Text>
+          <TextInput
+            placeholder="Calle"
+            value={street}
+            onChangeText={setStreet}
+            style={styles.input}
+            placeholderTextColor="#999"
+          />
+
+          <Text style={styles.label}>Numero</Text>
+          <TextInput
+            placeholder="Numero"
+            value={streetNumber}
+            onChangeText={setStreetNumber}
+            style={styles.input}
+            placeholderTextColor="#999"
+          />
+
+          <Text style={styles.label}>Piso/Apartamento</Text>
+          <TextInput
+            placeholder="Piso/Apartamento"
+            value={apartment}
+            onChangeText={setApartment}
+            style={styles.input}
+            placeholderTextColor="#999"
+          />
+
+          <Text style={styles.label}>Ciudad</Text>
+          <TextInput
+            placeholder="Ciudad"
+            value={city}
+            onChangeText={setCity}
+            style={styles.input}
+            placeholderTextColor="#999"
+          />
+
+          <Text style={styles.label}>Provincia</Text>
+          <TextInput
+            placeholder="Provincia"
+            value={province}
+            onChangeText={setProvince}
+            style={styles.input}
+            placeholderTextColor="#999"
+          />
+
+          <Text style={styles.label}>Codigo postal</Text>
+          <TextInput
+            placeholder="Codigo postal"
+            value={postalCode}
+            onChangeText={setPostalCode}
+            style={styles.input}
+            placeholderTextColor="#999"
+          />
+
+          <Text style={styles.label}>Info adicional</Text>
+          <TextInput
+            placeholder="Referencia de entrega"
+            value={additionalInfo}
+            onChangeText={setAdditionalInfo}
+            style={styles.input}
+            placeholderTextColor="#999"
+          />
+
+          <TouchableOpacity style={styles.button} onPress={handleSignup}>
+            <Text style={styles.buttonText}>{loading ? "Creando..." : "Crear"}</Text>
           </TouchableOpacity>
+
+          {!!error && <Text style={styles.switchText}>{error}</Text>}
+          {passwordErrors.map((passwordError) => (
+            <Text key={passwordError} style={styles.passwordError}>
+              {passwordError}
+            </Text>
+          ))}
 
           <Text style={styles.switchText}>
             ¿Ya tienes Cuenta?{" "}
@@ -181,5 +359,6 @@ const styles = StyleSheet.create({
   },
   buttonText: { color: "white", fontWeight: "bold", fontSize: 16 },
   switchText: { textAlign: "center", marginTop: 15, color: "#FFC107" },
+  passwordError: { color: "#ffeb3b", marginTop: 6, fontSize: 12, fontWeight: "bold" },
   switchLink: { fontWeight: "bold", color: "#FFC107" },
 });
