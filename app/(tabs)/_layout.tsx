@@ -1,6 +1,31 @@
-import { Tabs } from "expo-router";
+import { Redirect, Tabs, usePathname } from "expo-router";
 import { Image } from "react-native";
+import { session } from "@/services/session";
+
+const AUTH_ROUTES = new Set(["/", "/index", "/login", "/(tabs)", "/(tabs)/index", "/(tabs)/login"]);
+
+function TabIcon({ source }: Readonly<{ source: any }>) {
+  return <Image source={source} style={{ width: 28, height: 28 }} resizeMode="contain" />;
+}
+
+const HOME_TAB_ICON = () => <TabIcon source={require("@/assets/images/bolsa.png")} />;
+const CART_TAB_ICON = () => <TabIcon source={require("@/assets/images/carrito.png")} />;
+const ORDERS_TAB_ICON = () => <TabIcon source={require("@/assets/images/Mail.png")} />;
+const PROFILE_TAB_ICON = () => <TabIcon source={require("@/assets/images/persona.png")} />;
+
 export default function TabLayout() {
+  const pathname = usePathname();
+  const isAuthenticated = Boolean(session.getToken());
+  const isAuthRoute = AUTH_ROUTES.has(pathname);
+
+  if (!isAuthenticated && !isAuthRoute) {
+    return <Redirect href="/(tabs)/login" />;
+  }
+
+  if (isAuthenticated && isAuthRoute) {
+    return <Redirect href="/(tabs)/home" />;
+  }
+
   return (
     <Tabs
       screenOptions={{
@@ -9,6 +34,7 @@ export default function TabLayout() {
           borderTopWidth: 2,
           borderTopColor: "#0A8F3E",
           backgroundColor: "#fff",
+          display: isAuthRoute ? "none" : "flex",
         },
         tabBarActiveTintColor: "#0A8F3E",
         tabBarShowLabel: false,
@@ -22,49 +48,25 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          tabBarIcon: () => (
-            <Image
-              source={require("@/assets/images/bolsa.png")}
-              style={{ width: 28, height: 28 }}
-              resizeMode="contain"
-            />
-          ),
+          tabBarIcon: HOME_TAB_ICON,
         }}
       />
       <Tabs.Screen
         name="carrito"
         options={{
-          tabBarIcon: () => (
-            <Image
-              source={require("@/assets/images/carrito.png")}
-              style={{ width: 28, height: 28 }}
-              resizeMode="contain"
-            />
-          ),
+          tabBarIcon: CART_TAB_ICON,
         }}
       />
       <Tabs.Screen
         name="pedidos"
         options={{
-          tabBarIcon: () => (
-            <Image
-              source={require("@/assets/images/Mail.png")}
-              style={{ width: 28, height: 28 }}
-              resizeMode="contain"
-            />
-          ),
+          tabBarIcon: ORDERS_TAB_ICON,
         }}
       />
       <Tabs.Screen
         name="perfil"
         options={{
-          tabBarIcon: () => (
-            <Image
-              source={require("@/assets/images/persona.png")}
-              style={{ width: 28, height: 28 }}
-              resizeMode="contain"
-            />
-          ),
+          tabBarIcon: PROFILE_TAB_ICON,
         }}
       />
     </Tabs>
